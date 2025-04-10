@@ -173,6 +173,10 @@ add_filter( 'allowed_http_origins', 'vip_only_https_origins' );
  * @param array $origins
  */
 function vip_only_https_origins( $origins ) {
+	if ( ! defined( 'VIP_GO_APP_ENVIRONMENT' ) || 'production' === constant( 'VIP_GO_APP_ENVIRONMENT' ) ) {
+		return $origins;
+	}
+
 	return array_filter( $origins, function ( $origin ) {
 		return str_starts_with( $origin, 'https://' );
 	} );
